@@ -47,7 +47,7 @@ public class WeaponDefinition
     public float velocity = 50;
 }
 
-public class Weapon : MonoBehaviour
+public class Weapons2 : MonoBehaviour
 {
     static public Transform PROJECTILE_ANCHOR;
 
