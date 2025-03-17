@@ -14,7 +14,7 @@ public enum eWeaponType
     blaster,    // A simple blaster
     spread,     // Multiple shots simultaneously
     phaser,     // [NI] Shots that move in waves
-    missile,    // [NI] Homing missiles
+    bomb,    // [NI] bomb with explosion area damage
 
     laser,      // [NI] Damage over time
     shield      // Raise shieldLevel
@@ -47,7 +47,7 @@ public class WeaponDefinition
     [Tooltip("Seconds to delay between shots")]
     public float delayBetweenShots = 0;
     [Tooltip("Velocity of individual Projectiles")]
-    public float velocity = 50;
+    public float velocity = 0;
 }
 
 public class Weapon : MonoBehaviour
@@ -154,7 +154,7 @@ public class Weapon : MonoBehaviour
         p.transform.position = pos;
 
         p.type = type;
-        nextShotTime = Time.time + def.delayBetweenShots;                    // p
+       //nextShotTime = Time.time + def.delayBetweenShots;                    // p
         return (p);
     }
 }
