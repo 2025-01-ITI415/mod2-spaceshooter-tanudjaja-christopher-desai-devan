@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e62d638714b9741da967a5c76ca7f8fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 2
+  _type: 4
   def:
     type: 0
     letter: 
@@ -57,6 +57,7 @@ MonoBehaviour:
     damagePerSec: 0
     delayBetweenShots: 0
     velocity: 50
+    explosionRadius: 5
   nextShotTime: 0
 --- !u!1 &5153081989183711193
 GameObject:
