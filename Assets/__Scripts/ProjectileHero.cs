@@ -1,20 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 [RequireComponent(typeof(BoundsCheck))]
 public class ProjectileHero : MonoBehaviour
 {
     private BoundsCheck bndCheck;
     private Renderer rend;
+
     [Header("Dynamic")]
     public Rigidbody rigid;
+
     [SerializeField]
     private eWeaponType _type;
 
-    // Explosion related fields
     [Header("Explosion Settings")]
     public float explosionRadius = 5f;
     public GameObject explosionEffectPrefab; // Optional - for visual effects
+    public float explosionDelay = 1f; // Delay before explosion
+    private bool hasCollided = false;
+
+    [Header("Particle Effect")]
+    public GameObject particleEffectPrefab; // Particle system for bombs only
+    private GameObject particleEffectInstance;
 
     // This public property masks the private field _type
     public eWeaponType type
@@ -53,6 +61,17 @@ public class ProjectileHero : MonoBehaviour
         if (_type == eWeaponType.bomb)
         {
             transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+
+            // Instantiate particle effect if available
+            if (particleEffectPrefab != null)
+            {
+                particleEffectInstance = Instantiate(particleEffectPrefab, transform.position, Quaternion.identity, transform);
+                ParticleSystem ps = particleEffectInstance.GetComponent<ParticleSystem>();
+                if (ps != null)
+                {
+                    ps.Play();
+                }
+            }
         }
     }
 
@@ -67,13 +86,28 @@ public class ProjectileHero : MonoBehaviour
 
     void OnCollisionEnter(Collision coll)
     {
-        // If this is a bomb, create an explosion instead of being destroyed immediately
-        if (_type == eWeaponType.bomb)
+        // If this is a bomb and hasn't already collided, start the explosion coroutine
+        if (_type == eWeaponType.bomb && !hasCollided)
         {
-            Explode();
+            hasCollided = true;
+            StartCoroutine(DelayedExplosion());
         }
+    }
 
-        // The Enemy.cs will handle normal projectile collision logic
+    /// <summary>
+    /// Coroutine to delay the explosion
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator DelayedExplosion()
+    {
+        // Stop the bomb's movement
+        rigid.velocity = Vector3.zero;
+
+        // Wait for the specified delay
+        yield return new WaitForSeconds(explosionDelay);
+
+        // Create explosion
+        Explode();
     }
 
     /// <summary>
@@ -90,7 +124,7 @@ public class ProjectileHero : MonoBehaviour
         // Get the damage value for this bomb
         float damage = Main.GET_WEAPON_DEFINITION(_type).damageOnHit;
 
-        // Find all enemies in the explosion radius
+        // Find all colliders in the explosion radius
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach (Collider hit in colliders)
         {
@@ -100,6 +134,7 @@ public class ProjectileHero : MonoBehaviour
                 // Calculate damage based on distance from explosion center
                 float distance = Vector3.Distance(transform.position, enemy.transform.position);
                 float damagePercent = 1f - (distance / explosionRadius);
+
                 if (damagePercent > 0)
                 {
                     // Apply damage to the enemy

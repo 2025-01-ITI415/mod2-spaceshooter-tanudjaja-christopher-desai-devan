@@ -44,7 +44,7 @@ public class Hero : MonoBehaviour
 
         // Reset the weapons to start _Hero with 1 blaster
         ClearWeapons();
-        weapons[0].SetType(eWeaponType.blaster); //This is how you set the type of a weapon
+        weapons[0].SetType(eWeaponType.bomb); //This is how you set the type of a weapon
     }
 
     void Update()
