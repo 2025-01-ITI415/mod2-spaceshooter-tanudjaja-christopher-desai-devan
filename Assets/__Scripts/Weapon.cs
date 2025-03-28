@@ -27,6 +27,7 @@ public class WeaponDefinition
     public float delayBetweenShots = 0;
     public float velocity = 0;
     public float explosionRadius = 5f;
+    
 }
 
 public class Weapon : MonoBehaviour
@@ -42,6 +43,11 @@ public class Weapon : MonoBehaviour
     private GameObject weaponModel;
     private Transform shotPointTrans;
 
+    public AudioClip laserShootAudio; // For bomb
+    public AudioClip blasterShootAudio; // For blaster
+    public AudioClip spreadShootAudio; // For spread
+    private AudioSource audioSource; // AudioSource component to play the sound
+
     void Start()
     {
         if (PROJECTILE_ANCHOR == null)
@@ -55,6 +61,12 @@ public class Weapon : MonoBehaviour
 
         Hero hero = GetComponentInParent<Hero>();
         if (hero != null) hero.fireEvent += Fire;
+
+        audioSource = GetComponent<AudioSource>();
+    if (audioSource == null)
+    {
+        audioSource = gameObject.AddComponent<AudioSource>(); // Add an AudioSource if it doesn't exist
+    }
     }
 
     public eWeaponType type
@@ -109,6 +121,7 @@ public class Weapon : MonoBehaviour
             case eWeaponType.blaster:
                 p = MakeProjectile();
                 p.vel = vel;
+                PlayShootSound(blasterShootAudio);
                 break;
 
             case eWeaponType.spread:
@@ -120,15 +133,29 @@ public class Weapon : MonoBehaviour
                 p = MakeProjectile();
                 p.transform.rotation = Quaternion.AngleAxis(-10, Vector3.back);
                 p.vel = p.transform.rotation * vel;
+                PlayShootSound(spreadShootAudio);
                 break;
 
             case eWeaponType.bomb:
                 p = MakeProjectile();
                 p.vel = vel;
+                PlayShootSound(laserShootAudio);
                 break;
         }
 
         nextShotTime = Time.time + def.delayBetweenShots;
+    }
+
+    private void PlayShootSound(AudioClip clip)
+    {
+        if (clip != null)
+        {
+            audioSource.PlayOneShot(clip); // Play the selected audio clip
+        }
+        else
+        {
+            Debug.LogWarning("AudioClip is missing!");
+        }
     }
 
     private ProjectileHero MakeProjectile()
