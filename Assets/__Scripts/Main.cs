@@ -35,7 +35,11 @@ public class Main : MonoBehaviour
         // GameObject
         bndCheck = GetComponent<BoundsCheck>();
 
-        audioSource = GetComponent<audioSource>();
+        audioSource = GetComponent<AudioSource>();
+
+        if(audioSource == null){
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
 
         // Invoke SpawnEnemy() once (in 2 seconds, based on default values)
         Invoke(nameof(SpawnEnemy), 1f / enemySpawnPerSecond);                // a
@@ -125,10 +129,17 @@ public class Main : MonoBehaviour
     /// <param name="e"The Enemy that was destroyed</param
     static public void SHIP_DESTROYED(Enemy e)
     {
-        if (S.audioSource != null && S.screamClip != null && S.codKaboomClip != null)
+        if (S.audioSource != null)
         {
-            S.audioSource.PlayOneShot(S.screamClip);
-            S.audioSource.PlayOneShot(S.codKaboomClip);
+            if (S.screamClip != null) 
+            {
+                S.audioSource.PlayOneShot(S.screamClip);
+            }
+
+            if (S.codKaboomClip != null) 
+            {
+                S.audioSource.PlayOneShot(S.codKaboomClip);
+            }
         }
 
         // Potentially generate a PowerUp
