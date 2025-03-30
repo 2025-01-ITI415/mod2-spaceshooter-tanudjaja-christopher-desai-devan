@@ -747,6 +747,7 @@ MonoBehaviour:
     delayBetweenShots: 0.2
     velocity: 50
     explosionRadius: 5
+    explosionEffectPrefab: {fileID: 0}
   - type: 2
     letter: S
     powerUpColor: {r: 0.18623178, g: 0.8773585, b: 0.8561891, a: 1}
@@ -758,6 +759,7 @@ MonoBehaviour:
     delayBetweenShots: 0.4
     velocity: 50
     explosionRadius: 5
+    explosionEffectPrefab: {fileID: 0}
   - type: 6
     letter: O
     powerUpColor: {r: 0, g: 1, b: 0, a: 1}
@@ -769,6 +771,7 @@ MonoBehaviour:
     delayBetweenShots: 0
     velocity: 50
     explosionRadius: 5
+    explosionEffectPrefab: {fileID: 0}
   - type: 4
     letter: B
     powerUpColor: {r: 0.5518868, g: 0.3024864, b: 0.20305268, a: 1}
@@ -780,6 +783,7 @@ MonoBehaviour:
     delayBetweenShots: 0
     velocity: 20
     explosionRadius: 10
+    explosionEffectPrefab: {fileID: 5551298588212738099, guid: 33c0d3d5270829447aba7d628a75fbd8, type: 3}
   powerUpFrequency: 01000000010000000200000006000000
 --- !u!114 &963194230
 MonoBehaviour:
