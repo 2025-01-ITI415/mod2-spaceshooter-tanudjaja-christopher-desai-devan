@@ -778,10 +778,10 @@ MonoBehaviour:
     weaponModelPrefab: {fileID: 2150019802666471020, guid: 7098820c15f23c0479847216970cfc00, type: 3}
     projectilePrefab: {fileID: 8884485313326729009, guid: 93cdb1254cc5842aeb5402d7b9f73a99, type: 3}
     projectileColor: {r: 0.6792453, g: 0.27257448, b: 0.11534353, a: 1}
-    damageOnHit: 0
+    damageOnHit: 5
     damagePerSec: 0
     delayBetweenShots: 0
-    velocity: 20
+    velocity: 40
     explosionRadius: 10
     explosionEffectPrefab: {fileID: 5551298588212738099, guid: 33c0d3d5270829447aba7d628a75fbd8, type: 3}
   powerUpFrequency: 01000000010000000200000006000000
