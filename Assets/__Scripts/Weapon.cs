@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,8 +27,9 @@ public class WeaponDefinition
     public float delayBetweenShots = 0;
     public float velocity = 0;
     public float explosionRadius = 5f;
-    
+    public GameObject explosionEffectPrefab;
 }
+
 
 public class Weapon : MonoBehaviour
 {
