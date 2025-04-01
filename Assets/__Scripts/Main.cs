@@ -23,12 +23,23 @@ public class Main : MonoBehaviour
                                      eWeaponType.spread,  eWeaponType.shield };
     private BoundsCheck bndCheck;
 
+    public AudioClip screamClip;
+    public AudioClip codKaboomClip;
+    private AudioSource audioSource;
+
+
     void Awake()
     {
         S = this;
         // Set bndCheck to reference the BoundsCheck component on this 
         // GameObject
         bndCheck = GetComponent<BoundsCheck>();
+
+        audioSource = GetComponent<AudioSource>();
+
+        if(audioSource == null){
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
 
         // Invoke SpawnEnemy() once (in 2 seconds, based on default values)
         Invoke(nameof(SpawnEnemy), 1f / enemySpawnPerSecond);                // a
@@ -39,6 +50,7 @@ public class Main : MonoBehaviour
         {
             WEAP_DICT[def.type] = def;
         }
+        
 
     }
 
@@ -117,6 +129,19 @@ public class Main : MonoBehaviour
     /// <param name="e"The Enemy that was destroyed</param
     static public void SHIP_DESTROYED(Enemy e)
     {
+        if (S.audioSource != null)
+        {
+            if (S.screamClip != null) 
+            {
+                S.audioSource.PlayOneShot(S.screamClip);
+            }
+
+            if (S.codKaboomClip != null) 
+            {
+                S.audioSource.PlayOneShot(S.codKaboomClip);
+            }
+        }
+
         // Potentially generate a PowerUp
         if (Random.value <= e.powerUpDropChance)
         { // Underlined red for now  // c

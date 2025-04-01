@@ -59,6 +59,9 @@ MonoBehaviour:
     velocity: 50
     explosionRadius: 5
   nextShotTime: 0
+  laserShootAudio: {fileID: 8300000, guid: 1a68936eacfdc344aa7b44e19a9d530f, type: 3}
+  blasterShootAudio: {fileID: 8300000, guid: aefbae47f50eaec44a15210347f91ee5, type: 3}
+  spreadShootAudio: {fileID: 8300000, guid: 044b62450caac5a41abdec05f222c6ef, type: 3}
 --- !u!1 &5153081989183711193
 GameObject:
   m_ObjectHideFlags: 0
